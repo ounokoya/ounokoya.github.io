@@ -2,6 +2,11 @@
 
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) · Versions : [SemVer](https://semver.org/lang/fr/).
 
+## [1.0.1] — 2026-11-06
+
+### Fixed
+- Ligne de REST Countries : « a native radio filter » au lieu de « an accessible combobox » ; la solution v1.0.2 a remplacé le combobox par des boutons radio natifs (erreur de Claude, reprise du titre d'origine de la solution ; correction acceptée par Koya).
+
 ## [1.0.0] — 2026-11-06
 
 Première version du portfolio (étape E de la remise à niveau ; SDL 21.0.0 avec les ajouts du SDL-FM 1.5.0).
