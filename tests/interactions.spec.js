@@ -10,7 +10,7 @@ const KINDS = [
   ['lien pilule (texte)', (p) => link(p.getByRole('main'), 'Upwork'), 'color', COLORS.white, COLORS.navy],
   ['navigation', (p) => link(nav(p), 'Method'), 'textDecorationLine', 'none', 'underline'],
   ['lien du pied de page', (p) => link(footer(p), 'Source code on GitHub'), 'color', COLORS.white, COLORS.orange4],
-  ['lien de texte', (p) => link(p.getByRole('main'), `Code: ${FEATURED[0].title}`), 'color', COLORS.green, COLORS.green9],
+  ['lien de texte', (p) => link(p.getByRole('main'), `Code for ${FEATURED[0].title}`), 'color', COLORS.green, COLORS.green9],
 ]
 
 const matches = async (page, prop, actual, expected) => prop === 'textDecorationLine' ? actual === expected : sameColor(page, actual, expected)

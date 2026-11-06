@@ -40,7 +40,7 @@ test('S7 — les textes de contenu.md, dans l\'ordre', async ({ page }) => {
   for (const p of PRODUCTS) {
     const card = item(page, 4, p.name)
     await expect(text(card, p.text)).toBeVisible()
-    await expect(card.getByRole('list').getByRole('listitem')).toHaveText(p.tags)
+    await expect(card.getByRole('list').first().locator(':scope > li')).toHaveText(p.tags)
   }
   await expect(text(work, FM_SENTENCE)).toBeVisible()
   for (const s of FEATURED) {
@@ -49,8 +49,9 @@ test('S7 — les textes de contenu.md, dans l\'ordre', async ({ page }) => {
     await expect(text(card, s.line)).toBeVisible()
   }
   const more = page.getByRole('heading', { level: 4, name: '8 more solutions', exact: true }).locator('xpath=following::ul[1]')
-  await expect(more.getByRole('listitem')).toHaveCount(MORE.length)
-  for (const [i, s] of MORE.entries()) await expect(more.getByRole('listitem').nth(i)).toContainText(s.title)
+  const rows = more.locator(':scope > li')
+  await expect(rows).toHaveCount(MORE.length)
+  for (const [i, s] of MORE.entries()) await expect(rows.nth(i)).toContainText(s.title)
   await expect(text(work, 'Newbie').last()).toBeVisible()
 
   await expect(region(page, 'About').locator('p')).toHaveText(ABOUT)
@@ -97,7 +98,7 @@ const TYPE = [
   ['sous-titre', (p) => text(p.getByRole('main'), HERO.subtitle), 'Space Grotesk', '500', '24px', '20px', '32px', '28px'],
   ['bio courte', (p) => text(p.getByRole('main'), HERO.bio), 'Inter', '400', '18px', '16px', '30px', '26px'],
   ['texte de carte', (p) => text(p.getByRole('main'), FEATURED[0].line), 'Inter', '400', '16px', '16px', '26px', '26px'],
-  ['lien de carte', (p) => link(p.getByRole('main'), `Code: ${FEATURED[0].title}`), 'Inter', '500', '16px', '16px', '24px', '24px'],
+  ['lien de carte', (p) => link(p.getByRole('main'), `Code for ${FEATURED[0].title}`), 'Inter', '500', '16px', '16px', '24px', '24px'],
 ]
 
 test('S12 — polices et tailles de tokens.md (1440 et 375 px)', async ({ page }) => {
@@ -134,7 +135,7 @@ const INK = [
   ['numéro d\'étape', (p) => text(item(p, 3, METHOD.steps[0][1]), '01'), 'orange'],
   ['texte d\'étape', (p) => text(region(p, 'Method'), METHOD.steps[0][2]), 'slate'],
   ['niveau', (p) => text(item(p, 4, FEATURED[0].title), FEATURED[0].level), 'orange'],
-  ['lien de carte', (p) => link(p.getByRole('main'), `Code: ${FEATURED[0].title}`), 'green'],
+  ['lien de carte', (p) => link(p.getByRole('main'), `Code for ${FEATURED[0].title}`), 'green'],
   ['technologie', (p) => text(item(p, 4, 'LaunchKit'), 'Rust'), 'navy'],
   ['titre Contact', (p) => heading(footer(p), 2, 'Contact'), 'white'],
   ['phrase de contact', (p) => text(footer(p), CONTACT.sentence), 'mist'],

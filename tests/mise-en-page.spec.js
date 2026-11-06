@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test'
 import { open, banner, nav, footer, region, heading, link, photo, text, pageBox, cardBox, unionBox, near } from './helpers.js'
 import { HERO, PROFILES, METHOD, PRODUCTS, FEATURED } from './data.js'
 
-// Spec §4 et §7 — S1 à S5 : positions de la maquette validée (G3), à 1 px près dans le premier écran, à 2 px plus bas
+// Spec §4 et §7 — S1 à S5 : positions de la maquette validée (G3), à 1 px près dans le premier écran
+// (2 px pour la navigation et les liens des profils), à 2 px plus bas
 
 const LAYOUT = {
   desktop: {
@@ -21,11 +22,11 @@ const LAYOUT = {
     name: { x: 24, y: 20, width: 118, height: 28 }, nav: { x: 24, y: 60, width: 279, height: 24 },
     photo: { x: 24, y: 144, width: 160, height: 160 }, h1: { x: 24, y: 372, width: 327, height: 76 }, bio: { x: 24, y: 508, width: 327, height: 208 },
     pills: [[24, 796, 104], [140, 796, 96], [24, 856, 126], [162, 856, 109], [24, 916, 97]],
-    sections: { Method: [1028, 1204], Work: [2232, 4446], About: [6678, 856], footer: [7534, 537] },
+    sections: { Method: [1028, 1204], Work: [2232, 4446], About: [6678, 830], footer: [7508, 537] },
     steps: [1312, 1530, 1748, 1966].map((y) => ({ x: 24, y, width: 327 })),
     products: [2440, 2804].map((y) => ({ x: 24, y, width: 327 })),
     solutions: [0, 1, 2, 3, 4, 5].map((n) => ({ x: 24, y: 3330 + 432 * n, width: 327, height: 408 })),
-    more: { x: 24, y: 5922, width: 327, height: 692 }, about: { x: 24, y: 6806, width: 327, height: 664 },
+    more: { x: 24, y: 5922, width: 327, height: 692 }, about: { x: 24, y: 6806, width: 327, height: 638 },
   },
 }
 
@@ -34,14 +35,15 @@ for (const [id, screen] of [['S1', 'desktop'], ['S2', 'mobile']]) {
   test(`${id} — ${L.w} px : positions de la maquette`, async ({ page }) => {
     await open(page, L.w, L.h)
     near(await pageBox(link(banner(page), 'Koya Esdras')), L.name, 'nom')
-    near(await pageBox(nav(page)), L.nav, 'navigation')
+    // largeurs issues du texte : Penpot ne crène pas comme Chromium (« Freelancer » 82 px contre 80) → 2 px
+    near(await pageBox(nav(page)), L.nav, 'navigation', 2)
     near(await pageBox(photo(page)), L.photo, 'photo')
     near(await pageBox(heading(page, 1, HERO.title)), L.h1, 'h1')
     near(await pageBox(text(page, HERO.bio)), L.bio, 'bio courte')
     const main = page.getByRole('main')
     for (const [i, [name]] of PROFILES.entries()) {
       const [x, y, width] = L.pills[i]
-      near(await pageBox(link(main, name)), { x, y, width, height: 48 }, `lien ${name}`)
+      near(await pageBox(link(main, name)), { x, y, width, height: 48 }, `lien ${name}`, 2)
     }
 
     near(await pageBox(banner(page)), { y: 0 }, 'en-tête')

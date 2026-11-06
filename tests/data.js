@@ -79,9 +79,9 @@ export const MORE = [
 ]
 
 export const solutionLinks = (s) => [
-  [`Live site: ${s.title}`, site(s.repo)],
-  [`Code: ${s.title}`, code(s.repo)],
-  [`Frontend Mentor: ${s.title}`, s.fm],
+  [`Live site for ${s.title}`, site(s.repo)],
+  [`Code for ${s.title}`, code(s.repo)],
+  [`Frontend Mentor for ${s.title}`, s.fm],
 ]
 
 export const ABOUT = [

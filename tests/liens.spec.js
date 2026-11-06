@@ -10,7 +10,7 @@ test('S9 — chaque lien a son nom et son adresse exacts, dans l\'ordre de lectu
   await open(page, 1440)
   expect(await links(page)).toEqual(ALL_LINKS)
   // le nom accessible est bien celui du texte (pas d'aria-label qui le remplacerait)
-  for (const name of ['Live site: REST Countries API', 'Frontend Mentor: Stats preview card component', 'Radar on Contra']) await expect(link(page, name)).toHaveCount(1)
+  for (const name of ['Live site for REST Countries API', 'Frontend Mentor for Stats preview card component', 'Radar on Contra']) await expect(link(page, name)).toHaveCount(1)
   expect(await page.locator('a[href^="mailto:"], a[href^="tel:"]').count()).toBe(0)
 })
 

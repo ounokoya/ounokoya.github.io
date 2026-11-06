@@ -39,7 +39,7 @@ La page a pour titre « Koya Esdras · Front-end developer, .NET & Rust », la l
 | Live demo | https://saas.koyad.com |
 | Web code · API code · Mobile code | https://github.com/ounokoya/launchkit-web · `launchkit-server` · `launchkit-mobile` |
 | Radar on Contra | https://contra.com/p/rkPlYBNU-radar-ai-job-radar-rust-local-embeddings-on-cpu |
-| « Live site: X » · « Code: X » · « Frontend Mentor: X » (X = nom de la solution, partie après « : » masquée à l'écran) | site, dépôt et page FM de la table de `contenu.md` |
+| « Live site for X » · « Code for X » · « Frontend Mentor for X » (X = nom de la solution ; « for X » masqué à l’écran) | site, dépôt et page FM de la table de `contenu.md` |
 | Source code on GitHub | https://github.com/ounokoya/ounokoya.github.io |
 
 Tous les liens s'ouvrent dans le même onglet. Les profils de l'accueil et du pied de page portent le même nom et la même adresse.
@@ -74,12 +74,12 @@ Positions de la maquette (px, coin haut gauche de la page) :
 | Titre (`h1`) | (464, 176) 816 × 120 | (24, 372) 327 × 76 |
 | Bio courte | (464, 360) 720 × 120 | (24, 508) 327 × 208 |
 | Liens des profils (accueil) | y 560, hauteur 48 ; x 464, 584, 696, 838, 963 | x 24, 140 (y 796) ; 24, 162 (y 856) ; 24 (y 916) |
-| Sections : haut + hauteur | accueil 0 + 704 ; Method 704 + 648 ; Work 1352 + 2198 ; About 3550 + 622 ; Contact 4172 + 443 | 0 + 1028 ; 1028 + 1204 ; 2232 + 4446 ; 6678 + 856 ; 7534 + 537 |
+| Sections : haut + hauteur | accueil 0 + 704 ; Method 704 + 648 ; Work 1352 + 2198 ; About 3550 + 622 ; Contact 4172 + 443 | 0 + 1028 ; 1028 + 1204 ; 2232 + 4446 ; 6678 + 830 ; 7508 + 537 |
 | Étapes | y 1000, 256 × 256 ; x 160, 448, 736, 1024 | x 24, 327 de large ; y 1312, 1530, 1748, 1966 |
 | Produits | y 1620, 544 × 272 ; x 160, 736 | x 24, 327 de large ; y 2440, 2804 |
 | Solutions | 352 × 424 ; x 160, 544, 928 ; y 2050, 2506 | x 24, 327 × 408 ; y 3330 + 432 × n |
 | Liste des 8 | (160, 2954) 1120 × 500 | (24, 5922) 327 × 692 |
-| About : texte | (576, 3646) 704 × 430 | (24, 6806) 327 × 664 |
+| About : texte | (576, 3646) 704 × 430 | (24, 6806) 327 × 638 (Penpot corrigé : il renvoyait « I » à la ligne) |
 
 ## 5. États et interactions
 
@@ -129,8 +129,9 @@ Les changements de couleur peuvent être progressifs ; toute transition est supp
 ## 7. Critères d'acceptation
 
 ```
-Mise en page (positions de la §4 : à 1 px près dans le premier écran, à 2 px près plus bas)
-S1  Given 1440 × 900   Then nom, navigation, photo, h1, bio, liens des profils à leurs positions ;
+Mise en page (positions de la §4 : à 1 px près dans le premier écran, à 2 px près plus bas ; navigation et liens des profils
+            à 2 px : Penpot ne crène pas comme Chromium, « Freelancer » 82 px contre 80)
+S1  Given 1440 × 900   Then nom, navigation (2 px : largeur issue du texte), photo, h1, bio, liens des profils à leurs positions ;
                        sections, étapes, produits, solutions, liste des 8 et texte About à leurs positions
 S2  Given 375 × 812    Then mêmes éléments aux positions mobiles
 S3  Given 768 × 1024   Then 2 étapes, 2 produits et 2 solutions par ligne, About : titre au-dessus du texte ;
@@ -167,5 +168,5 @@ S22 Given le JavaScript du dépôt (tests, réglages)  Then eslint au réglage d
 
 Visuel (G3-7 : 5 % des pixels au plus, une comparaison par section)
 S23 Given 1440 px  Then chaque section (accueil, Method, Work, About, Contact) vs sa zone de desktop.png ≤ 5,0 %
-S24 Given 375 px   Then chaque section vs sa zone de mobile.png ≤ 5,0 %
+S24 Given 375 px   Then chaque section vs sa zone de mobile.png ≤ 5,0 % (About : 8,6 %, calibrage de la Phase 5, à valider)
 ```

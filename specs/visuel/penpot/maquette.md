@@ -8,7 +8,7 @@
 |---|---|
 | Bibliothèque | 12 couleurs et 17 typographies (dossier « Portfolio »), celles de `tokens.md` |
 | Composants | Lien pilule (Normal, Survol), Lien de navigation (Normal, Survol), Lien de texte (Normal, Survol), Carte solution, Carte produit, Carte étape, Étiquette |
-| Écrans | « Desktop 1440 » (1440 × 4615) et « Mobile 375 » (375 × 8071), en mise en page automatique (colonnes et lignes, comme le CSS) |
+| Écrans | « Desktop 1440 » (1440 × 4615) et « Mobile 375 » (375 × 8045), en mise en page automatique (colonnes et lignes, comme le CSS) |
 | États | Tableau « États » : normal, survol et focus clavier de chaque type de lien |
 | Prototype | Aucune interaction scriptée : la page n'a que des liens natifs (ancres de la navigation et liens externes). Les états sont montrés dans le tableau « États » |
 
@@ -21,7 +21,7 @@
 | `etats.png` | États des liens |
 | `apercu-maquette.png` | Les deux écrans côte à côte, au quart |
 
-L'exportateur PNG de Penpot n'a pas les polices : chaque écran est exporté en SVG, ses `<style>` retirés, ses images remplacées par les fichiers locaux, puis rendu dans Chromium avec Space Grotesk et Inter (méthode du SDL-FM 1.3.0).
+L'exportateur PNG de Penpot n'a pas les polices : chaque écran est exporté en SVG, ses `<style>` retirés, ses images remplacées par les fichiers locaux, puis rendu dans Chromium avec Space Grotesk et Inter (méthode du SDL-FM 1.3.0). Depuis la Phase 5, `desktop.png` et `mobile.png` sont rendus **sans la largeur imposée à chaque ligne** (`NATURAL=1`) : Penpot mesure ses lignes sans le crénage de Chromium, ce qui décalait les lettres de plusieurs pixels en bout de ligne.
 
 ## Mesures (lues dans Penpot, en px, coin haut gauche de l'écran)
 
@@ -40,8 +40,8 @@ L'exportateur PNG de Penpot n'a pas les polices : chaque écran est exporté en 
 | Carte solution REST Countries | (160, 2050) 352 × 424 ; capture 352 × 220 | (24, 3330) 327 × 408 ; capture 327 × 204 |
 | Carte solution Product preview | (928, 2506) 352 × 424 (grille 3 × 2, écart 32) | (24, 5490), empilées (écart 24) |
 | Liste des 8 autres | (160, 2954) 1120 × 500 | (24, 5922) 327 × 692 |
-| About (Paper) : bio longue | y 3550 ; texte (576, 3646) 704 × 430, titre à gauche | y 6678 ; texte (24, 6806) 327 × 664, sous le titre |
-| Contact (Navy, pied de page) | y 4172, hauteur 443 | y 7534, hauteur 537 |
+| About (Paper) : bio longue | y 3550 ; texte (576, 3646) 704 × 430, titre à gauche | y 6678, hauteur 830 ; texte (24, 6806) 327 × 638, sous le titre |
+| Contact (Navy, pied de page) | y 4172, hauteur 443 | y 7508, hauteur 537 |
 
 ## Points à valider (G3)
 
@@ -55,3 +55,11 @@ L'exportateur PNG de Penpot n'a pas les polices : chaque écran est exporté en 
 | G3-6 | Tablette (768 à 1023 px, non dessinée) | La disposition desktop, contenu à 24 px des bords, photo de 160 px, étapes et cartes sur 2 colonnes ; une colonne sous 768 px |
 | G3-7 | Seuils visuels | Le site comparé aux rendus `desktop.png` et `mobile.png` : 5 % des pixels au plus (règle du SDL-FM) |
 | G3-8 | Captures des solutions | Le haut de la capture du README de chaque dépôt, recadré en 16:10 |
+
+## Corrections et calibrage de la Phase 5 (2026-11-06)
+
+| Point | Constat | Suite |
+|---|---|---|
+| About mobile, 2e paragraphe | Penpot renvoyait « I » à la ligne (il compte l'espace de fin de ligne) ; Chromium le garde : 24 lignes au lieu de 25 | Paragraphe élargi de 4 px dans Penpot (327 → 331) : la maquette coupe comme le navigateur ; About 830 px, Contact à y 7508 |
+| Largeurs issues du texte | Penpot ne crène pas « Fr » comme Chromium : « Freelancer » 82 px contre 80 | Navigation et liens des profils vérifiés à 2 px (S1, S2) |
+| Lissage des lettres | Penpot place chaque ligne de son SVG sur la ligne de base « idéographique », environ 0,3 px plus bas que le CSS ; site et maquette alignés au pixel (décalage optimal 0, 0) | Écarts par section : 1440 px de 1,26 à 3,14 % ; 375 px de 2,93 à 4,53 %, sauf About (presque tout en texte) **7,58 %** → seuil calibré **8,6 %** (règle du SDL-FM : écart + 1 point), **à valider par Koya** |
