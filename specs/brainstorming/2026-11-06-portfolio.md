@@ -67,3 +67,18 @@ Koya : « Je valide » (page et plan). Dessin : `specs/visuel/portfolio-plan.png
 - **LaunchKit** : 4 dépôts publics (`launchkit-web` SvelteKit 2, `launchkit-server` ASP.NET Core 10 et ArangoDB avec un worker Rust, `launchkit-mobile` Flutter, `launchkit-deploy` k3s), démo https://saas.koyad.com (`gh repo list`).
 - **Radar** : « A Rust worker scores missions with a local AI model, behind an ASP.NET Core API, a live web app and an Android app » (`~/projets/freelance/propositions/2026-11-05-contra-replit-missions.md`) ; adresse de sa page Contra à relever en Phase 2.
 - **Point à trancher en G3** : la phrase « 0 issues on the automated report » n'est vérifiée que pour 12 solutions ; les rapports du Newsletter et de l'E-commerce portent sur d'anciennes versions (les régénérer coûte un crédit IA).
+
+## Maquette validée (G3, 2026-11-06)
+
+Koya : « Je valide (G3) ». Maquette : `specs/visuel/penpot/maquette.md` (fichier Penpot « portfolio »). Toutes les propositions sont retenues.
+
+| # | Point | Décision |
+|---|---|---|
+| G3-1 | Couleurs et polices | Navy, Paper, Sand ; vert et orange (Côte d'Ivoire) ; Space Grotesk et Inter (`specs/reference/tokens.md`) |
+| G3-2 | Titre de l'accueil | Deux lignes, « Front-end developer » puis « .NET & Rust » ; 32 px en mobile |
+| G3-3 | Navigation | Method, Work, About, Contact ; Work regroupe Products et Frontend Mentor solutions |
+| G3-4 | Phrase des solutions FM | « 14 solutions, each built from a written spec and tested in a real browser. » (pas de « 0 issues ») |
+| G3-5 | Textes nouveaux | Ceux marqués *proposé* dans `specs/reference/contenu.md` |
+| G3-6 | Tablette (768 à 1023 px) | Disposition desktop, contenu à 24 px des bords, photo de 160 px, étapes et cartes sur 2 colonnes |
+| G3-7 | Seuils visuels | 5 % face aux rendus `desktop.png` et `mobile.png` |
+| G3-8 | Captures | Haut de la capture du README de chaque dépôt, recadré en 16:10 |

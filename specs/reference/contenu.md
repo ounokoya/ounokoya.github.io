@@ -52,7 +52,7 @@ Titre « Work », deux parties : « Products » et « Frontend Mentor solutions 
 | Produit | Texte | Technologies | Liens |
 |---|---|---|---|
 | LaunchKit | « A SaaS starter kit: accounts, organizations, roles, invitations and an admin back office, on web and mobile. » | SvelteKit 2 · ASP.NET Core 10 · ArangoDB · Rust · Flutter | « Live demo » https://saas.koyad.com ; « Web code » https://github.com/ounokoya/launchkit-web ; « API code » https://github.com/ounokoya/launchkit-server ; « Mobile code » https://github.com/ounokoya/launchkit-mobile |
-| Radar | « My own job radar. A Rust worker scores missions with a local AI model, behind an ASP.NET Core API, a live web app and an Android app. » | Rust · local AI · ASP.NET Core · Android | « Radar on Contra » (adresse de la page Contra à relever en Phase 2) |
+| Radar | « My own job radar. A Rust worker scores missions with a local AI model, behind an ASP.NET Core API, a live web app and an Android app. » | Rust · local AI · ASP.NET Core · Android | « Radar on Contra » https://contra.com/p/rkPlYBNU-radar-ai-job-radar-rust-local-embeddings-on-cpu (relevée le 2026-11-06) |
 
 ### Frontend Mentor solutions
 

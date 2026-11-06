@@ -1,6 +1,6 @@
 # Maquette Penpot — portfolio
 
-> Maquette de la page validée en Pré-dev 2 (`specs/visuel/portfolio-plan.png`). Fichier Penpot **« portfolio »** (créé par Koya le 2026-11-06), page « Maquette ». Pas d'image FM ici : **la maquette est la référence** des mesures et du rendu ; les textes viennent de `specs/reference/contenu.md`, les couleurs et polices de `specs/reference/tokens.md`.
+> **Validée par Koya (G3) le 2026-11-06**, toutes les propositions retenues. Maquette de la page validée en Pré-dev 2 (`specs/visuel/portfolio-plan.png`). Fichier Penpot **« portfolio »** (créé par Koya le 2026-11-06), page « Maquette ». Pas d'image FM ici : **la maquette est la référence** des mesures et du rendu ; les textes viennent de `specs/reference/contenu.md`, les couleurs et polices de `specs/reference/tokens.md`.
 
 ## Contenu du fichier
 
