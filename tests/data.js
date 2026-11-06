@@ -59,7 +59,7 @@ const site = (repo) => `https://ounokoya.github.io/${repo}/`
 const code = (repo) => `https://github.com/ounokoya/${repo}`
 
 export const FEATURED = [
-  { title: 'REST Countries API', level: 'Advanced', line: 'Hash routing, an accessible combobox and a dark theme.', repo: 'rest-countries-api', fm: fm('rest-countries-api-with-tailwind-v4-hash-routing-and-apg-combobox-vn9b1fV3r1') },
+  { title: 'REST Countries API', level: 'Advanced', line: 'Hash routing, a native radio filter and a dark theme.', repo: 'rest-countries-api', fm: fm('rest-countries-api-with-tailwind-v4-hash-routing-and-apg-combobox-vn9b1fV3r1') },
   { title: 'Multi-step form', level: 'Advanced', line: 'Native validation, FormData and a plan summary.', repo: 'multi-step-form', fm: fm('multi-step-form-with-tailwind-v4-native-validation-and-formdata-UGQKLcYaCP') },
   { title: 'E-commerce product page', level: 'Intermediate', line: 'A native dialog lightbox, a cart and a mobile menu.', repo: 'ecommerce-product-page', fm: fm('e-commerce-product-page-with-tailwind-v4-native-dialog-and-playwright-Ll7Dgb9LKU') },
   { title: 'Newsletter sign-up form', level: 'Junior', line: 'Native validation and a success state.', repo: 'newsletter-signup-form', fm: fm('newsletter-form-with-tailwind-v4-native-validation-and-playwright-zqE-xVEsyZ') },
