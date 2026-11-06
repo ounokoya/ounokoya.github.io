@@ -25,7 +25,7 @@ Contrôle rouge avant le code (page vide) : **27 échecs pour la bonne raison** 
 | Accueil | 1,70 % | 4,53 % |
 | Method | 1,69 % | 3,42 % |
 | Work | 1,80 % | 3,55 % |
-| About | 3,14 % | 7,58 % (seuil calibré 8,6 %, à valider par Koya) |
+| About | 3,14 % | 7,58 % (seuil calibré 8,6 %, validé par Koya) |
 | Contact | 1,26 % | 2,93 % |
 
 ### Corrections pendant la Phase 5
@@ -54,5 +54,4 @@ Contrôle rouge avant le code (page vide) : **27 échecs pour la bonne raison** 
 
 ## 3. Reste à faire
 
-- Valider le seuil calibré d'About en mobile (8,6 %).
 - Publication (accord de Koya) : dépôt public `ounokoya.github.io`, branche `gh-pages`, tag v1.0.0 poussé ; tests sur le site en ligne (`BASE_URL=https://ounokoya.github.io/ npm test`, dont le lien du code source).

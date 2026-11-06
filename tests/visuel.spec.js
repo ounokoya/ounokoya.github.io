@@ -11,7 +11,7 @@ const SCREENS = [
 const MAX = 0.05
 // Calibrage (règle du SDL-FM : écart de rendu + 1 point) : Penpot place chaque ligne de son SVG sur la ligne de base
 // « idéographique », environ 0,3 px plus bas que le CSS ; sur About en mobile, presque tout en texte, ce lissage
-// des lettres fait 7,6 % de pixels différents pour un rendu identique à l'œil (décalage optimal 0, 0). À valider par Koya.
+// des lettres fait 7,6 % de pixels différents pour un rendu identique à l'œil (décalage optimal 0, 0). Validé par Koya le 2026-11-06.
 const CALIBRATED = { S24: { About: 0.086 } }
 
 for (const { id, ref, w, sections } of SCREENS) {
