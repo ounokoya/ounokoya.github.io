@@ -52,6 +52,15 @@ Contrôle rouge avant le code (page vide) : **27 échecs pour la bonne raison** 
 
 **Écart E7 (768 px)** : « My Frontend Mentor profile » se coupait sur deux lignes à côté de la phrase. Le lien passe sous la phrase jusqu'à 1024 px (desktop et mobile inchangés) ; 34 / 34 après la retouche.
 
-## 3. Reste à faire
+## 3. Publication et vérification en ligne (Phase 8, accord de Koya)
 
-- Publication (accord de Koya) : dépôt public `ounokoya.github.io`, branche `gh-pages`, tag v1.0.0 poussé ; tests sur le site en ligne (`BASE_URL=https://ounokoya.github.io/ npm test`, dont le lien du code source).
+Koya : « Oui, publie » (2026-11-06), avec la validation du seuil calibré d'About mobile.
+
+| Étape | Résultat |
+|---|---|
+| Dépôt public | https://github.com/ounokoya/ounokoya.github.io créé ; `main` et le tag `v1.0.0` poussés |
+| GitHub Pages | Activé d'office par GitHub sur `main` (HTML non construit) : source passée sur `gh-pages`, construction relancée ; `npm run deploy` a publié `dist/` |
+| Site en ligne | https://ounokoya.github.io/ sert la version construite (feuille `/assets/index-CrKxs_Vm.css`, icône et images en 200) |
+| Tests sur le site en ligne | `BASE_URL=https://ounokoya.github.io/ npm test` : **34 / 34**, dont S10 avec le lien « Source code on GitHub » ; écarts visuels identiques au local |
+
+Les 14 solutions restent servies à leurs adresses `ounokoya.github.io/<dépôt>/` (vérifié par S10).
