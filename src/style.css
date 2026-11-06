@@ -1,0 +1,181 @@
+/* Polices servies avec le site, sous-ensemble latin (ADR-0004) */
+@import "@fontsource/space-grotesk/latin-500.css";
+@import "@fontsource/space-grotesk/latin-700.css";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "tailwindcss";
+
+/* Tokens de la bibliothèque Penpot validée en G3 (specs/reference/tokens.md, ADR-0003) */
+@theme {
+  --color-*: initial;
+  --color-navy-900: #14213d;
+  --color-paper: #faf7f2;
+  --color-sand: #f1ebe0;
+  --color-white: #ffffff;
+  --color-mist: #d0d3d8;
+  --color-slate-600: #4b5563;
+  --color-green-700: #0b6e4f;
+  --color-green-900: #084c37;
+  --color-orange-700: #c2410c;
+  --color-orange-400: #fb923c;
+  --color-mint-400: #34d399;
+  --color-line: #e7e1d6;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: Inter, sans-serif;
+
+  --text-hero: 3.5rem;
+  --text-hero--line-height: 3.75rem;
+  --text-hero-mobile: 2rem;
+  --text-hero-mobile--line-height: 2.375rem;
+  --text-section: 2.5rem;
+  --text-section--line-height: 3rem;
+  --text-section-mobile: 2rem;
+  --text-section-mobile--line-height: 2.5rem;
+  --text-part: 1.75rem;
+  --text-part--line-height: 2.25rem;
+  --text-part-mobile: 1.5rem;
+  --text-part-mobile--line-height: 2rem;
+  --text-card-title: 1.375rem;
+  --text-card-title--line-height: 1.75rem;
+  --text-card-title-mobile: 1.25rem;
+  --text-card-title-mobile--line-height: 1.75rem;
+  --text-lead: 1.5rem;
+  --text-lead--line-height: 2rem;
+  --text-lead-mobile: 1.25rem;
+  --text-lead-mobile--line-height: 1.75rem;
+  --text-brand: 1.25rem;
+  --text-brand--line-height: 1.75rem;
+  --text-body: 1.125rem;
+  --text-body--line-height: 1.875rem;
+  --text-body-mobile: 1rem;
+  --text-body-mobile--line-height: 1.625rem;
+  --text-card: 1rem;
+  --text-card--line-height: 1.625rem;
+  --text-link: 1rem;
+  --text-link--line-height: 1.5rem;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.25rem;
+  --text-kicker: 0.875rem;
+  --text-kicker--line-height: 1.25rem;
+  --text-kicker--letter-spacing: 0.09375rem;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1rem;
+  --text-label--letter-spacing: 0.0625rem;
+
+  --radius-card: 1rem;
+}
+
+@layer base {
+  /* fond déclaré : la page reste la même en thème sombre de l'appareil (A7) */
+  html {
+    color-scheme: light;
+    background-color: var(--color-paper);
+  }
+
+  /* focus clavier : contour de 2 px décalé de 3 px, Green 700 sur fond clair, Orange 400 sur Navy (spec §5) */
+  a:focus-visible {
+    outline: 0.125rem solid var(--color-green-700);
+    outline-offset: 0.1875rem;
+  }
+
+  .on-navy a:focus-visible {
+    outline-color: var(--color-orange-400);
+  }
+}
+
+@layer components {
+  /* contenu de 1120 px au plus, à 24 px des bords au moins (ADR-0007) */
+  .wrap {
+    inline-size: min(70rem, 100% - 3rem);
+    margin-inline: auto;
+  }
+
+  /* carte : bordure Line de 1 px dessinée par-dessus le contenu, comme le contour intérieur de Penpot */
+  .card {
+    position: relative;
+    border-radius: var(--radius-card);
+    background-color: var(--color-white);
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 0.0625rem solid var(--color-line);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* anneau Orange 400 de 4 px autour de la photo, décoratif */
+  .photo {
+    box-shadow: 0 0 0 0.25rem var(--color-orange-400);
+  }
+
+  /* point de disponibilité, décoratif (A2) */
+  .available::before {
+    content: "";
+    inline-size: calc(var(--spacing) * 2.5);
+    block-size: calc(var(--spacing) * 2.5);
+    border-radius: 50%;
+    background-color: var(--color-mint-400);
+  }
+
+  /* survol progressif du texte et du fond seulement : le contour de focus apparaît tout de suite */
+  .pill,
+  .link,
+  .link-foot {
+    transition-property: color, background-color;
+    transition-duration: 150ms;
+  }
+
+  .pill {
+    @apply inline-flex h-12 items-center rounded-full border-2 border-white px-5 text-link font-medium text-white;
+  }
+
+  .pill:hover {
+    @apply bg-white text-navy-900;
+  }
+
+  .link-nav {
+    @apply text-white no-underline;
+  }
+
+  .link-nav:hover {
+    @apply underline;
+  }
+
+  .link-foot {
+    @apply font-medium text-white underline;
+  }
+
+  .link-foot:hover {
+    @apply text-orange-400;
+  }
+
+  .link {
+    @apply text-link font-medium text-green-700 underline;
+  }
+
+  .link:hover {
+    @apply text-green-900;
+  }
+
+  .tag {
+    @apply rounded-full bg-paper px-2.5 py-1 text-label font-semibold uppercase;
+  }
+
+  .label {
+    @apply text-label font-semibold text-orange-700 uppercase;
+  }
+}
+
+/* aucune transition si l'utilisateur les refuse (A8) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    transition: none !important;
+  }
+}
