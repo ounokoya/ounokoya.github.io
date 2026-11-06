@@ -27,7 +27,7 @@ Space Grotesk (titres) et Inter (texte), toutes deux sur Google Fonts et Fontsou
 
 | Usage | Police | ≥ 768 px | < 768 px |
 |---|---|---|---|
-| Titre de l'accueil (`h1`) | Space Grotesk 700 | 56 px, interligne 60 | 36 px, interligne 40 |
+| Titre de l'accueil (`h1`, 2 lignes) | Space Grotesk 700 | 56 px, interligne 60 | 32 px, interligne 38 (G3-2) |
 | Sous-titre de l'accueil | Space Grotesk 500 | 24 px, interligne 32 | 20 px, interligne 28 |
 | Titres de section (`h2`) | Space Grotesk 700 | 40 px, interligne 48 | 32 px, interligne 40 |
 | Parties (`h3`) | Space Grotesk 700 | 28 px, interligne 36 | 24 px, interligne 32 |
