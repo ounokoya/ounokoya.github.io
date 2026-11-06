@@ -82,3 +82,10 @@ Koya : « Je valide (G3) ». Maquette : `specs/visuel/penpot/maquette.md` (fichi
 | G3-6 | Tablette (768 à 1023 px) | Disposition desktop, contenu à 24 px des bords, photo de 160 px, étapes et cartes sur 2 colonnes |
 | G3-7 | Seuils visuels | 5 % face aux rendus `desktop.png` et `mobile.png` |
 | G3-8 | Captures | Haut de la capture du README de chaque dépôt, recadré en 16:10 |
+
+## Spec, ADR, verrou et code (2026-11-06)
+
+- Spec : `specs/specifications/portfolio.md` (S1 à S24) ; tests écrits avant le code ; ADR : `specs/adr/v1.0/` (ADR-0003 à ADR-0008).
+- **Verrou** : Koya, « Oui, lance le code » (installation des outils et des polices Fontsource ; Claude écrit le code).
+- Contrôle rouge sur une page vide : 27 échecs pour la bonne raison, 7 tests de garde verts. Code : 34 / 34 ; parcours réel : `specs/analyse/2026-11-06-portfolio.md`.
+- **À valider par Koya** : seuil calibré de la section About en mobile, 8,6 % (7,58 % mesuré, ligne de base des textes Penpot ; les 9 autres sections ≤ 4,53 %).
