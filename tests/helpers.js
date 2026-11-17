@@ -1,13 +1,13 @@
-import { readFileSync } from 'node:fs'
 import { expect } from '@playwright/test'
 import { PNG } from 'pngjs'
 
 // Les tests ne s'appuient que sur la spec : rôles et noms accessibles (§6), contenu (§2), comportement (§5),
 // jamais sur des classes ou une structure HTML précise.
 
-export async function open(page, width, height = 900) {
+// path : './' (anglais) ou './fr/' (français), ADR-0009
+export async function open(page, width, height = 900, path = './') {
   await page.setViewportSize({ width, height })
-  await page.goto('./')
+  await page.goto(path)
   await page.evaluate(() => document.fonts.ready)
 }
 
@@ -17,7 +17,7 @@ export const footer = (page) => page.getByRole('contentinfo')
 export const region = (page, name) => page.getByRole('region', { name, exact: true })
 export const heading = (page, level, name) => page.getByRole('heading', { level, name, exact: true })
 export const link = (scope, name) => scope.getByRole('link', { name, exact: true })
-export const photo = (page) => page.getByRole('img', { name: 'Portrait of Koya Esdras', exact: true })
+export const photo = (page, name) => page.getByRole('img', { name, exact: true })
 export const text = (scope, value) => scope.getByText(value, { exact: true })
 
 // Boîte dans la page (et non dans la fenêtre), arrondie au pixel
@@ -64,33 +64,3 @@ export async function pixel(page, x, y) {
   return [shot.data[0], shot.data[1], shot.data[2]]
 }
 export const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16))
-
-export const MAQUETTE = new URL('../specs/visuel/penpot/', import.meta.url)
-
-// Part des pixels dont un canal diffère de plus de 40 (mesure du SDL-FM), entre une zone de la capture du site
-// et la même zone du rendu de la maquette ; les deux zones sont comparées sur leur hauteur commune.
-// `exclude` : zone de la page (coordonnées du site) ignorée, comme la photo, dont le contenu n'est pas la mise en page
-export function diffRatio(screenshot, referenceFile, ref, site, exclude = null) {
-  const actual = PNG.sync.read(screenshot)
-  const expected = PNG.sync.read(readFileSync(new URL(referenceFile, MAQUETTE)))
-  const width = Math.min(ref.width, site.width)
-  const height = Math.min(ref.height, site.height)
-  const skip = (x, y) => exclude && x >= exclude.x && x < exclude.x + exclude.width && y >= exclude.y && y < exclude.y + exclude.height
-  let different = 0
-  let compared = 0
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      if (skip(site.x + x, site.y + y)) continue
-      compared++
-      const a = ((site.y + y) * actual.width + site.x + x) * 4
-      const e = ((ref.y + y) * expected.width + ref.x + x) * 4
-      const delta = Math.max(
-        Math.abs(actual.data[a] - expected.data[e]),
-        Math.abs(actual.data[a + 1] - expected.data[e + 1]),
-        Math.abs(actual.data[a + 2] - expected.data[e + 2]),
-      )
-      if (delta > 40) different++
-    }
-  }
-  return different / compared
-}

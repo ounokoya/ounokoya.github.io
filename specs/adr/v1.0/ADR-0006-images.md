@@ -16,6 +16,9 @@ La photo du CV fait 1000 × 1000 (P4) ; les captures des README des solutions fo
 ## Mise à jour v1.0.2 (2026-11-17)
 La photo du site est désormais celle du profil LinkedIn, disponible seulement en 360 × 360 : `scripts/images.py` l'agrandit à 480 × 480 (un peu moins nette sur écran haute densité). La photo du CV reste dans `nouveau_cv/assets/`.
 
+## Mise à jour v2.0.0 (2026-11-17)
+La page ne montre plus que 3 solutions : `scripts/images.py` ne produit plus que leurs 3 captures (REST Countries API, Multi-step form, E-commerce product page) ; les 3 autres fichiers sont retirés de `public/images/`.
+
 ## Conséquences
 - Une nouvelle solution = relancer le script avec sa capture.
 - Fitness function (test « ADR-0006 » de `tests/statique.spec.js`) : photo 480 × 480 non différée ; 6 captures 704 × 440, différées, dimensions déclarées.

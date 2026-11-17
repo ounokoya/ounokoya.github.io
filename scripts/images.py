@@ -2,7 +2,7 @@
 
 Usage : python3 scripts/images.py
 Sources : specs/reference/images/ (photo du CV, captures des README des solutions).
-Sorties : public/images/photo.jpg (480 × 480) et public/images/<dépôt>.jpg (704 × 440, 16:10).
+Sorties : public/images/photo.jpg (480 × 480) et public/images/<dépôt>.jpg (704 × 440, 16:10), pour les 3 solutions de la v2.
 """
 from pathlib import Path
 
@@ -17,9 +17,6 @@ FEATURED = {
     "rest-countries-api": "rest-countries-api",
     "multi-step-form": "multi-step-form",
     "ecommerce-product-page": "ecommerce-product-page",
-    "newsletter-signup": "newsletter-signup-form",
-    "recipe-page": "recipe-page",
-    "front-ui-cart": "front-ui-cart",
 }
 
 

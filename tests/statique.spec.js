@@ -4,16 +4,20 @@ import { readFileSync } from 'node:fs'
 import { HtmlValidate } from 'html-validate'
 import { ESLint } from 'eslint'
 import { open, photo } from './helpers.js'
+import { LANGS } from './data.js'
 
-// Spec §7 — S20 à S22 : validateur W3C Nu et règles des vérifications automatiques de FM ;
-// fitness functions des ADR-0003, ADR-0004, ADR-0006 et ADR-0008
+// Spec v2 §7 — S20 à S22 : validateur W3C Nu et règles des vérifications automatiques de FM, pour les deux pages ;
+// fitness functions des ADR-0003, ADR-0004, ADR-0006, ADR-0008 et ADR-0009
 
 const root = (path) => new URL(`../${path}`, import.meta.url)
 const vnu = root('node_modules/vnu-jar/build/dist/vnu.jar').pathname
 const COLOR = /#[0-9a-f]{3,8}\b|\brgba?\(|\bhsla?\(|\boklch\(/i
 
-test('S20 — le HTML servi passe le validateur W3C Nu sans erreur', async ({ request }) => {
-  const html = await (await request.get('./')).text()
+const PAGES = LANGS.map((L) => L.path)
+const SOURCES = ['index.html', 'fr/index.html']
+
+for (const path of PAGES) test(`S20 — le HTML servi (${path}) passe le validateur W3C Nu sans erreur`, async ({ request }) => {
+  const html = await (await request.get(path)).text()
   let output = ''
   try {
     execFileSync('java', ['-jar', vnu, '--errors-only', '--format', 'text', '-'], { input: html, encoding: 'utf8', stdio: 'pipe' })
@@ -24,8 +28,8 @@ test('S20 — le HTML servi passe le validateur W3C Nu sans erreur', async ({ re
 })
 
 // Préréglage recommandé, sans les règles de style que FM n'applique pas ; aucune exception (les règles de FM s'imposent)
-test('S21 — Règles FM : html-validate sans erreur sur le HTML servi', async ({ request }) => {
-  const html = await (await request.get('./')).text()
+for (const path of PAGES) test(`S21 — Règles FM : html-validate sans erreur sur le HTML servi (${path})`, async ({ request }) => {
+  const html = await (await request.get(path)).text()
   const validator = new HtmlValidate({
     extends: ['html-validate:recommended'],
     rules: { 'doctype-style': 'off', 'void-style': 'off' },
@@ -44,9 +48,8 @@ test('S22 — Règles FM : eslint sans erreur dans le JavaScript du dépôt', as
 })
 
 test('ADR-0003 — aucune couleur écrite en dur hors des tokens', () => {
-  const html = readFileSync(root('index.html'), 'utf8')
   const sources = {
-    'index.html (classes, styles)': [...html.matchAll(/(?:class|style)="([^"]*)"|<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1] ?? m[2]).join('\n'),
+    ...Object.fromEntries(SOURCES.map((file) => [`${file} (classes, styles)`, [...readFileSync(root(file), 'utf8').matchAll(/(?:class|style)="([^"]*)"|<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1] ?? m[2]).join('\n')])),
     // les tokens sont des propriétés personnalisées (--…) : seules leurs valeurs portent des couleurs
     'src/style.css (hors tokens)': readFileSync(root('src/style.css'), 'utf8').replace(/--[\w-]+\s*:[^;]+;/g, ''),
   }
@@ -69,41 +72,53 @@ test('ADR-0004 — rien n\'est chargé hors du domaine ; Space Grotesk 500 et 70
   expect(outside).toEqual([])
 })
 
-test('ADR-0006 — photo 480 × 480 chargée tout de suite ; captures 704 × 440, différées, dimensions déclarées', async ({ page }) => {
+test('ADR-0006 — photo 480 × 480 chargée tout de suite ; 3 captures 704 × 440, différées, dimensions déclarées', async ({ page }) => {
   await open(page, 1440)
-  const p = await photo(page).evaluate((img) => ({ w: img.naturalWidth, h: img.naturalHeight, loading: img.loading }))
+  const p = await photo(page, LANGS[0].hero.photo).evaluate((img) => ({ w: img.naturalWidth, h: img.naturalHeight, loading: img.loading }))
   expect([p.w, p.h]).toEqual([480, 480])
   expect(p.loading).not.toBe('lazy')
   const captures = await page.locator('main img[alt=""]').evaluateAll((imgs) => imgs.map((img) => ({ src: img.getAttribute('src'), loading: img.loading, width: img.getAttribute('width'), height: img.getAttribute('height') })))
-  expect(captures).toHaveLength(6)
+  expect(captures).toHaveLength(3)
   for (const c of captures) {
     expect.soft(c.loading, c.src).toBe('lazy')
     expect.soft([c.width, c.height], c.src).toEqual(['704', '440'])
   }
   await page.evaluate(() => Promise.all([...document.images].map((img) => { img.loading = 'eager'; return img.decode().catch(() => {}) })))
   const sizes = await page.locator('main img[alt=""]').evaluateAll((imgs) => imgs.map((img) => `${img.naturalWidth}×${img.naturalHeight}`))
-  expect(sizes).toEqual(Array(6).fill('704×440'))
+  expect(sizes).toEqual(Array(3).fill('704×440'))
 })
 
-test('ADR-0008 — site servi à la racine du domaine : feuilles de style et images en adresses absolues depuis /', async ({ request }) => {
-  const html = await (await request.get('./')).text()
-  const refs = [...html.matchAll(/(?:href|src)="([^"#][^"]*)"/g)].map((m) => m[1]).filter((u) => !/^https?:/.test(u))
+for (const path of PAGES) test(`ADR-0008 — site servi à la racine du domaine : feuilles de style et images en adresses absolues depuis / (${path})`, async ({ request }) => {
+  const html = await (await request.get(path)).text()
+  const refs = [...html.matchAll(/(?:href|src)="([^"#][^"]*)"/g)].map((m) => m[1]).filter((u) => !/^(https?|mailto):/.test(u))
   expect(refs.length).toBeGreaterThan(0)
   expect(refs.filter((u) => !u.startsWith('/'))).toEqual([])
+})
+
+// Les deux pages : mêmes ancres, mêmes adresses externes dans le même ordre, un lien vers l'autre langue
+test('ADR-0009 — les deux pages ont la même structure de liens et se relient', async ({ request }) => {
+  const pages = await Promise.all(PAGES.map(async (path) => (await (await request.get(path)).text())))
+  const hrefs = (html) => [...html.matchAll(/<a [^>]*href="([^"]+)"/g)].map((m) => m[1])
+  const ids = (html) => [...html.matchAll(/ id="([^"]+)"/g)].map((m) => m[1])
+  const [en, fr] = pages
+  expect(ids(fr)).toEqual(ids(en))
+  expect(hrefs(fr).filter((h) => !['/', '/fr/'].includes(h))).toEqual(hrefs(en).filter((h) => !['/', '/fr/'].includes(h)))
+  expect(hrefs(en)).toContain('/fr/')
+  expect(hrefs(fr)).toContain('/')
 })
 
 // Règle FM vue sur les solutions précédentes (SDL-FM Phase 6) : les longueurs écrites à la main sont en rem
 test('Règles FM — aucune longueur en px écrite à la main (src/style.css, valeurs arbitraires du HTML)', () => {
   const css = readFileSync(root('src/style.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '')
-  const html = readFileSync(root('index.html'), 'utf8')
+  const html = SOURCES.map((file) => readFileSync(root(file), 'utf8')).join('\n')
   const arbitrary = [...html.matchAll(/class="([^"]*)"/g)].flatMap((m) => m[1].split(/\s+/)).filter((c) => /\[[^\]]*\d+(\.\d+)?px/.test(c))
   expect(css.match(/\b\d+(\.\d+)?px\b/g) ?? []).toEqual([])
   expect(arbitrary).toEqual([])
 })
 
 // Règle FM (rapport du Social proof, 2026-11-05) : l'outil de FM refuse aria-label hors des éléments interactifs et des repères
-test('Règles FM — aria-label seulement sur un élément interactif ou un repère', async ({ page }) => {
-  await page.goto('./')
+for (const path of PAGES) test(`Règles FM — aria-label seulement sur un élément interactif ou un repère (${path})`, async ({ page }) => {
+  await page.goto(path)
   const misused = await page.evaluate(() => {
     const ok = 'a[href], button, input, select, textarea, summary, iframe, img, area, form, fieldset, figure, table, td, th, main, nav, header, footer, aside, section, [role]'
     return [...document.querySelectorAll('[aria-label]')].filter((el) => !el.matches(ok)).map((el) => `<${el.localName} aria-label="${el.getAttribute('aria-label')}">`)

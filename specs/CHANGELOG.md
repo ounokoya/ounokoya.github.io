@@ -2,6 +2,28 @@
 
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) · Versions : [SemVer](https://semver.org/lang/fr/).
 
+## [2.0.0] — 2026-11-17
+
+Portfolio de freelance, en anglais et en français (`specs/brainstorming/2026-11-17-portfolio-freelance.md`).
+
+### Added
+- Page française `/fr/` et lien de langue dans l'en-tête ; balises `hreflang` (ADR-0009).
+- Sections Services (4 cartes) et CodinGame (rang, tableau des 4 meilleures ligues, techniques des bots).
+- Trois chiffres clés dans l'accueil ; partie « R&D at JooL International » (2 cartes sans lien).
+- Contact par e-mail `koya.esdras@gmail.com` (`mailto:`), dans l'accueil et le pied de page (ADR-0011).
+- Tests : contenu, liens, focus, mise en page et accessibilité des deux pages ; structure commune des pages (ADR-0009) ; lien de langue (S25) ; tableau sans défilement (S4).
+
+### Changed
+- Positionnement : « AI & full-stack engineer · Rust · Python · .NET », missions au forfait.
+- Method réécrite pour les clients ; About et Contact réécrits.
+- Front-end réduit à 3 solutions Frontend Mentor et un lien vers le profil.
+- Fonds : Method sur Paper (filet de séparation), About sur Sand ; les surtitres orange restent sur Paper (contraste AA).
+
+### Removed
+- Règle P3 (« ni e-mail ni téléphone ») : remplacée par l'ADR-0011.
+- Tests S1, S2, S23 et S24, liés à la maquette Penpot v1 (ADR-0010).
+- 3 captures et 8 solutions FM de la liste compacte.
+
 ## [1.0.2] — 2026-11-17
 
 ### Changed
