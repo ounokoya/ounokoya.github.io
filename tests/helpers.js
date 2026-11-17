@@ -68,15 +68,20 @@ export const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16))
 export const MAQUETTE = new URL('../specs/visuel/penpot/', import.meta.url)
 
 // Part des pixels dont un canal diffère de plus de 40 (mesure du SDL-FM), entre une zone de la capture du site
-// et la même zone du rendu de la maquette ; les deux zones sont comparées sur leur hauteur commune
-export function diffRatio(screenshot, referenceFile, ref, site) {
+// et la même zone du rendu de la maquette ; les deux zones sont comparées sur leur hauteur commune.
+// `exclude` : zone de la page (coordonnées du site) ignorée, comme la photo, dont le contenu n'est pas la mise en page
+export function diffRatio(screenshot, referenceFile, ref, site, exclude = null) {
   const actual = PNG.sync.read(screenshot)
   const expected = PNG.sync.read(readFileSync(new URL(referenceFile, MAQUETTE)))
   const width = Math.min(ref.width, site.width)
   const height = Math.min(ref.height, site.height)
+  const skip = (x, y) => exclude && x >= exclude.x && x < exclude.x + exclude.width && y >= exclude.y && y < exclude.y + exclude.height
   let different = 0
+  let compared = 0
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
+      if (skip(site.x + x, site.y + y)) continue
+      compared++
       const a = ((site.y + y) * actual.width + site.x + x) * 4
       const e = ((ref.y + y) * expected.width + ref.x + x) * 4
       const delta = Math.max(
@@ -87,5 +92,5 @@ export function diffRatio(screenshot, referenceFile, ref, site) {
       if (delta > 40) different++
     }
   }
-  return different / (width * height)
+  return different / compared
 }

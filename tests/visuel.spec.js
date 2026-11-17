@@ -13,6 +13,8 @@ const MAX = 0.05
 // « idéographique », environ 0,3 px plus bas que le CSS ; sur About en mobile, presque tout en texte, ce lissage
 // des lettres fait 7,6 % de pixels différents pour un rendu identique à l'œil (décalage optimal 0, 0). Validé par Koya le 2026-11-06.
 const CALIBRATED = { S24: { About: 0.086 } }
+// La photo est exclue de la comparaison : la maquette garde l'ancienne photo (v1.0.2), seul son contenu change ;
+// sa place et sa taille restent vérifiées par S1, S2 et le test ADR-0006.
 
 for (const { id, ref, w, sections } of SCREENS) {
   test(`${id} — ${w} px, chaque section vs ${ref} (≤ ${MAX * 100} %)`, async ({ page }, testInfo) => {
@@ -30,10 +32,11 @@ for (const { id, ref, w, sections } of SCREENS) {
       About: await pageBox(region(page, 'About')),
       Contact: await pageBox(footer(page)),
     }
+    const photo = await pageBox(page.locator('img.photo'))
     const shot = await page.screenshot({ fullPage: true, caret: 'hide', animations: 'disabled' })
     await testInfo.attach(ref, { body: shot, contentType: 'image/png' })
     for (const [name, [y, height]] of Object.entries(sections)) {
-      const ratio = diffRatio(shot, ref, { x: 0, y, width: w, height }, { ...site[name], x: 0, width: w })
+      const ratio = diffRatio(shot, ref, { x: 0, y, width: w, height }, { ...site[name], x: 0, width: w }, photo)
       testInfo.annotations.push({ type: `${name} : pixels différents`, description: `${(ratio * 100).toFixed(2)} %` })
       const max = CALIBRATED[id]?.[name] ?? MAX
       expect.soft(ratio, `${name} : ${(ratio * 100).toFixed(2)} % (seuil ${(max * 100).toFixed(1)} %)`).toBeLessThanOrEqual(max)

@@ -2,6 +2,14 @@
 
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) · Versions : [SemVer](https://semver.org/lang/fr/).
 
+## [1.0.2] — 2026-11-17
+
+### Changed
+- Photo : celle du profil LinkedIn (chemise violette, 360 × 360 en source, agrandie à 480 × 480 par `scripts/images.py`) remplace la photo du CV, à la demande de Koya.
+
+### Fixed
+- Tests S23 et S24 : la zone de la photo est exclue de la comparaison avec la maquette, qui garde l'ancienne photo ; sa place et sa taille restent vérifiées par S1, S2 et le test ADR-0006 (`diffRatio` accepte une zone exclue).
+
 ## [1.0.1] — 2026-11-06
 
 ### Fixed

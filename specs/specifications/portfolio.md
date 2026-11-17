@@ -169,4 +169,5 @@ S22 Given le JavaScript du dépôt (tests, réglages)  Then eslint au réglage d
 Visuel (G3-7 : 5 % des pixels au plus, une comparaison par section)
 S23 Given 1440 px  Then chaque section (accueil, Method, Work, About, Contact) vs sa zone de desktop.png ≤ 5,0 %
 S24 Given 375 px   Then chaque section vs sa zone de mobile.png ≤ 5,0 % (About : 8,6 %, calibrage de la Phase 5 validé par Koya le 2026-11-06)
+    (depuis la v1.0.2, la zone de la photo est exclue : la maquette garde l'ancienne photo)
 ```

@@ -13,6 +13,9 @@ La photo du CV fait 1000 × 1000 (P4) ; les captures des README des solutions fo
 - Photo chargée tout de suite ; captures en `loading="lazy"` ; `width` et `height` déclarés (pas de saut de mise en page).
 - Favicon : `public/favicon.svg` (carré Navy 900, anneau Orange 400, comme la photo).
 
+## Mise à jour v1.0.2 (2026-11-17)
+La photo du site est désormais celle du profil LinkedIn, disponible seulement en 360 × 360 : `scripts/images.py` l'agrandit à 480 × 480 (un peu moins nette sur écran haute densité). La photo du CV reste dans `nouveau_cv/assets/`.
+
 ## Conséquences
 - Une nouvelle solution = relancer le script avec sa capture.
 - Fitness function (test « ADR-0006 » de `tests/statique.spec.js`) : photo 480 × 480 non différée ; 6 captures 704 × 440, différées, dimensions déclarées.
